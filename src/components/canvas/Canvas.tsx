@@ -1,24 +1,20 @@
 import './Canvas.css'
-import React, { useEffect, useRef } from 'react'
-import {Canvas as FiberCanvas } from '@react-three/fiber';
+import {AxesHelperProps, Canvas as FiberCanvas } from '@react-three/fiber';
 import { AppOrbitControls } from '../controls/app-orbit-controls/AppOrbitControls';
+import {  Vector3 } from 'three';
+import { appConfig } from '../../configs/config';
+import { MainScene } from '../main-scene/MainScene';
 
 export const Canvas = () => {
-    const fiberCanvasRef = useRef<any>();
-
-    useEffect(() => {
-        if (fiberCanvasRef.current) {
-            
-        }
-    }, [])
+    const axes: AxesHelperProps = {
+        scale: new Vector3(10, 10, 10),
+    };
 
     return (
-        <FiberCanvas ref={fiberCanvasRef} className={"canvas"}>
-            <mesh>
-                <AppOrbitControls />
-                <ambientLight intensity={0.1} />
-                <directionalLight intensity={1} position={[-1, 1, 0]} />
-            </mesh>
+        <FiberCanvas className={"canvas"}>
+            <MainScene />
+            { appConfig.DEBUG &&<axesHelper {...axes} /> }
+            { appConfig.DEBUG && <AppOrbitControls /> }
         </FiberCanvas>
     );
 };
